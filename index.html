@@ -1,14 +1,21 @@
 
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
+
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#102b35">
 <meta name="description" content="ثبت عکس همراه با موقعیت دقیق GPS و توضیحات">
+
 <title>GeoSnap Pro | ثبت هوشمند مکان و عکس</title>
+
+<!-- آیکون تصویری برنامه -->
+<link rel="icon" href="./icon-192.png" type="image/png">
+<link rel="apple-touch-icon" href="./icon-192.png">
+
+<!-- تنظیمات نصب برنامه -->
 <link rel="manifest" href="./manifest.webmanifest">
-<link rel="icon" href="./icon.svg" type="image/svg+xml">
 
 <style>
 :root {
@@ -24,7 +31,11 @@
   --danger:#d94e4e;
   --radius:19px;
 }
-* {box-sizing:border-box}
+
+* {
+  box-sizing:border-box;
+}
+
 body {
   margin:0;
   background:var(--bg);
@@ -32,142 +43,454 @@ body {
   font-family:Tahoma,Arial,sans-serif;
   font-size:14px;
 }
-button,input,textarea,select {font:inherit}
-button {cursor:pointer}
-.app {max-width:650px;margin:auto;min-height:100vh;padding-bottom:85px}
+
+button,input,textarea,select {
+  font:inherit;
+}
+
+button {
+  cursor:pointer;
+}
+
+.app {
+  max-width:650px;
+  margin:auto;
+  min-height:100vh;
+  padding-bottom:85px;
+}
+
 header {
   background:linear-gradient(140deg,#102b35,#20535a);
-  color:white;padding:23px 19px 27px;
+  color:white;
+  padding:23px 19px 27px;
   border-radius:0 0 27px 27px;
 }
-.top {display:flex;align-items:center;justify-content:space-between}
-.brand {display:flex;align-items:center;gap:11px}
+
+.top {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+
+.brand {
+  display:flex;
+  align-items:center;
+  gap:11px;
+}
+
 .logo {
-  width:45px;height:45px;border-radius:14px;
-  background:#ffffff1c;display:grid;place-items:center;font-size:24px;
+  width:45px;
+  height:45px;
+  border-radius:14px;
+  background:#ffffff1c;
+  display:grid;
+  place-items:center;
+  font-size:24px;
 }
-h1 {font-size:19px;margin:0 0 5px}
-header p {margin:0;color:#c5d8d9;font-size:12px}
+
+h1 {
+  font-size:19px;
+  margin:0 0 5px;
+}
+
+header p {
+  margin:0;
+  color:#c5d8d9;
+  font-size:12px;
+}
+
 .status {
-  margin-top:20px;background:#ffffff12;border:1px solid #ffffff20;
-  border-radius:15px;padding:13px;display:flex;align-items:center;
-  justify-content:space-between;gap:10px;
+  margin-top:20px;
+  background:#ffffff12;
+  border:1px solid #ffffff20;
+  border-radius:15px;
+  padding:13px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
 }
-.status small {color:#c5d8d9}
-.status strong {font-size:22px;display:block;margin-top:5px}
-main {padding:18px}
-.section-title {font-size:16px;font-weight:bold;margin:5px 0 14px}
-.grid {display:grid;grid-template-columns:1fr 1fr;gap:12px}
+
+.status small {
+  color:#c5d8d9;
+}
+
+.status strong {
+  font-size:22px;
+  display:block;
+  margin-top:5px;
+}
+
+main {
+  padding:18px;
+}
+
+.section-title {
+  font-size:16px;
+  font-weight:bold;
+  margin:5px 0 14px;
+}
+
+.grid {
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+}
+
 .action {
-  border:0;border-radius:var(--radius);padding:18px 12px;
-  min-height:115px;text-align:right;display:flex;
-  flex-direction:column;justify-content:space-between;gap:12px;
+  border:0;
+  border-radius:var(--radius);
+  padding:18px 12px;
+  min-height:115px;
+  text-align:right;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+  gap:12px;
 }
-.action .emoji {font-size:27px}
-.action strong {font-size:14px}
-.action span:last-child {font-size:11px;opacity:.75}
-.primary {background:var(--green);color:white}
-.secondary {background:white;color:var(--dark);border:1px solid var(--border)}
+
+.action .emoji {
+  font-size:27px;
+}
+
+.action strong {
+  font-size:14px;
+}
+
+.action span:last-child {
+  font-size:11px;
+  opacity:.75;
+}
+
+.primary {
+  background:var(--green);
+  color:white;
+}
+
+.secondary {
+  background:white;
+  color:var(--dark);
+  border:1px solid var(--border);
+}
+
 .notice {
-  border-radius:14px;background:var(--green2);color:#176c53;
-  padding:13px;line-height:1.9;font-size:12px;margin-top:16px;
+  border-radius:14px;
+  background:var(--green2);
+  color:#176c53;
+  padding:13px;
+  line-height:1.9;
+  font-size:12px;
+  margin-top:16px;
 }
-.muted {color:var(--muted)}
-.hidden {display:none!important}
-.view {display:none}
-.view.active {display:block}
+
+.muted {
+  color:var(--muted);
+}
+
+.hidden {
+  display:none!important;
+}
+
+.view {
+  display:none;
+}
+
+.view.active {
+  display:block;
+}
+
 nav {
-  position:fixed;bottom:0;left:0;right:0;z-index:10;
-  max-width:650px;margin:auto;background:#fff;
+  position:fixed;
+  bottom:0;
+  left:0;
+  right:0;
+  z-index:10;
+  max-width:650px;
+  margin:auto;
+  background:#fff;
   border-top:1px solid var(--border);
-  display:flex;justify-content:space-around;
+  display:flex;
+  justify-content:space-around;
   padding:10px 5px calc(10px + env(safe-area-inset-bottom));
 }
+
 nav button {
-  border:0;background:transparent;color:var(--muted);
-  display:flex;flex-direction:column;gap:5px;align-items:center;
-  font-size:11px;padding:5px 12px;
+  border:0;
+  background:transparent;
+  color:var(--muted);
+  display:flex;
+  flex-direction:column;
+  gap:5px;
+  align-items:center;
+  font-size:11px;
+  padding:5px 12px;
 }
-nav button.active {color:var(--green);font-weight:bold}
-nav span {font-size:20px}
+
+nav button.active {
+  color:var(--green);
+  font-weight:bold;
+}
+
+nav span {
+  font-size:20px;
+}
+
 .panel {
-  background:white;border:1px solid var(--border);
-  border-radius:var(--radius);padding:15px;margin-bottom:13px;
+  background:white;
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  padding:15px;
+  margin-bottom:13px;
 }
-.page-head {display:flex;align-items:center;justify-content:space-between;margin-bottom:15px}
-.page-head h2 {font-size:17px;margin:0}
+
+.page-head {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:15px;
+}
+
+.page-head h2 {
+  font-size:17px;
+  margin:0;
+}
+
 .back {
-  border:0;background:#e5f3ef;color:#147654;
-  padding:9px 13px;border-radius:10px;
+  border:0;
+  background:#e5f3ef;
+  color:#147654;
+  padding:9px 13px;
+  border-radius:10px;
 }
+
 .camera-box {
-  background:#0b1519;border-radius:20px;overflow:hidden;
-  position:relative;min-height:260px;
+  background:#0b1519;
+  border-radius:20px;
+  overflow:hidden;
+  position:relative;
+  min-height:260px;
 }
-#video {width:100%;display:block;max-height:65vh;object-fit:cover}
+
+#video {
+  width:100%;
+  display:block;
+  max-height:65vh;
+  object-fit:cover;
+}
+
 .camera-placeholder {
-  min-height:300px;color:white;display:flex;
-  justify-content:center;align-items:center;text-align:center;
-  padding:20px;line-height:2;
+  min-height:300px;
+  color:white;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  padding:20px;
+  line-height:2;
 }
+
 .gps-overlay {
-  margin-top:12px;background:var(--dark);color:white;
-  border-radius:14px;padding:13px;line-height:1.9;
+  margin-top:12px;
+  background:var(--dark);
+  color:white;
+  border-radius:14px;
+  padding:13px;
+  line-height:1.9;
 }
-.gps-overlay small {color:#c7d8dc}
-.gps-overlay strong {color:#9cebd1}
-.capture-actions {display:flex;gap:10px;margin-top:14px}
+
+.gps-overlay small {
+  color:#c7d8dc;
+}
+
+.gps-overlay strong {
+  color:#9cebd1;
+}
+
+.capture-actions {
+  display:flex;
+  gap:10px;
+  margin-top:14px;
+}
+
 .btn {
-  border:0;border-radius:13px;padding:14px 16px;
-  font-weight:bold;flex:1;
+  border:0;
+  border-radius:13px;
+  padding:14px 16px;
+  font-weight:bold;
+  flex:1;
 }
-.btn-green {background:var(--green);color:white}
-.btn-dark {background:var(--dark);color:white}
-.btn-light {background:#e9f0f1;color:var(--dark)}
-.btn-danger {background:#fce9e9;color:var(--danger)}
-.btn:disabled {opacity:.5;cursor:wait}
-.field {margin:13px 0}
-.field label {display:block;font-size:12px;font-weight:bold;margin-bottom:8px}
-.field input,.field textarea,.field select {
-  display:block;width:100%;border:1px solid var(--border);
-  border-radius:12px;padding:13px;background:#fafcfc;
-  color:var(--text);outline:none;
+
+.btn-green {
+  background:var(--green);
+  color:white;
 }
-.field textarea {min-height:95px;resize:vertical}
-.field input:focus,.field textarea:focus {border-color:var(--green)}
-.photo-list {display:grid;grid-template-columns:1fr 1fr;gap:11px}
+
+.btn-dark {
+  background:var(--dark);
+  color:white;
+}
+
+.btn-light {
+  background:#e9f0f1;
+  color:var(--dark);
+}
+
+.btn-danger {
+  background:#fce9e9;
+  color:var(--danger);
+}
+
+.btn:disabled {
+  opacity:.5;
+  cursor:wait;
+}
+
+.field {
+  margin:13px 0;
+}
+
+.field label {
+  display:block;
+  font-size:12px;
+  font-weight:bold;
+  margin-bottom:8px;
+}
+
+.field input,
+.field textarea,
+.field select {
+  display:block;
+  width:100%;
+  border:1px solid var(--border);
+  border-radius:12px;
+  padding:13px;
+  background:#fafcfc;
+  color:var(--text);
+  outline:none;
+}
+
+.field textarea {
+  min-height:95px;
+  resize:vertical;
+}
+
+.field input:focus,
+.field textarea:focus {
+  border-color:var(--green);
+}
+
+.photo-list {
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:11px;
+}
+
 .photo-card {
-  background:white;border:1px solid var(--border);
-  overflow:hidden;border-radius:15px;cursor:pointer;
+  background:white;
+  border:1px solid var(--border);
+  overflow:hidden;
+  border-radius:15px;
+  cursor:pointer;
 }
-.photo-card img {width:100%;height:130px;object-fit:cover;display:block}
-.photo-info {padding:10px}
-.photo-info strong {display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.photo-info small {display:block;color:var(--muted);margin-top:7px;direction:ltr;text-align:right;font-size:10px}
-.empty {text-align:center;padding:35px 15px;color:var(--muted);line-height:2}
+
+.photo-card img {
+  width:100%;
+  height:130px;
+  object-fit:cover;
+  display:block;
+}
+
+.photo-info {
+  padding:10px;
+}
+
+.photo-info strong {
+  display:block;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+.photo-info small {
+  display:block;
+  color:var(--muted);
+  margin-top:7px;
+  direction:ltr;
+  text-align:right;
+  font-size:10px;
+}
+
+.empty {
+  text-align:center;
+  padding:35px 15px;
+  color:var(--muted);
+  line-height:2;
+}
+
 .modal {
-  position:fixed;inset:0;z-index:30;background:#0009;
-  display:flex;justify-content:center;align-items:flex-end;
+  position:fixed;
+  inset:0;
+  z-index:30;
+  background:#0009;
+  display:flex;
+  justify-content:center;
+  align-items:flex-end;
   padding:12px;
 }
+
 .modal-card {
-  width:100%;max-width:620px;max-height:94vh;overflow:auto;
-  background:white;border-radius:23px;padding:17px;
+  width:100%;
+  max-width:620px;
+  max-height:94vh;
+  overflow:auto;
+  background:white;
+  border-radius:23px;
+  padding:17px;
 }
-.modal-card img {width:100%;max-height:310px;object-fit:contain;background:#111;border-radius:14px}
+
+.modal-card img {
+  width:100%;
+  max-height:310px;
+  object-fit:contain;
+  background:#111;
+  border-radius:14px;
+}
+
 .coords {
-  background:#edf5f5;border-radius:12px;padding:12px;
-  margin:12px 0;line-height:2;direction:ltr;text-align:left;font-size:12px;
+  background:#edf5f5;
+  border-radius:12px;
+  padding:12px;
+  margin:12px 0;
+  line-height:2;
+  direction:ltr;
+  text-align:left;
+  font-size:12px;
+  overflow-wrap:anywhere;
 }
-.map-link {color:#08795c;font-weight:bold;text-decoration:none}
-footer {text-align:center;color:#91a0a5;font-size:10px;padding:15px}
+
+.map-link {
+  color:#08795c;
+  font-weight:bold;
+  text-decoration:none;
+}
+
+footer {
+  text-align:center;
+  color:#91a0a5;
+  font-size:10px;
+  padding:15px;
+}
+
 @media(min-width:500px) {
-  .photo-card img {height:170px}
+  .photo-card img {
+    height:170px;
+  }
 }
 </style>
 </head>
 
 <body>
+
 <div class="app">
 
 <header>
@@ -198,28 +521,35 @@ footer {text-align:center;color:#91a0a5;font-size:10px;padding:15px}
 
 <!-- صفحه خانه -->
 <section class="view active" id="home">
+
   <div class="section-title">خوش آمدید</div>
+
   <div class="grid">
+
     <button class="action primary" id="startCamera">
       <span class="emoji">📸</span>
       <strong>ثبت عکس جدید</strong>
       <span>عکس همراه با GPS</span>
     </button>
+
     <button class="action secondary" data-page="archive">
       <span class="emoji">🖼️</span>
       <strong>آرشیو تصاویر</strong>
       <span>مشاهده عکس‌های قبلی</span>
     </button>
+
     <button class="action secondary" data-page="map">
       <span class="emoji">🗺️</span>
       <strong>مکان‌های ثبت‌شده</strong>
       <span>مشاهده مختصات روی نقشه</span>
     </button>
+
     <button class="action secondary" id="backupButton">
       <span class="emoji">💾</span>
       <strong>پشتیبان‌گیری</strong>
       <span>خروجی اطلاعات پروژه</span>
     </button>
+
   </div>
 
   <div class="notice">
@@ -227,75 +557,140 @@ footer {text-align:center;color:#91a0a5;font-size:10px;padding:15px}
     برای ثبت موقعیت، مجوز مکان‌یابی را فعال کن.
   </div>
 
-  <div class="section-title" style="margin-top:24px">آخرین تصاویر</div>
+  <div class="section-title" style="margin-top:24px">
+    آخرین تصاویر
+  </div>
+
   <div id="recentPhotos" class="photo-list"></div>
+
 </section>
 
 <!-- صفحه دوربین -->
 <section class="view" id="camera">
+
   <div class="page-head">
     <h2>دوربین و ثبت موقعیت</h2>
     <button class="back" id="closeCamera">بازگشت</button>
   </div>
 
   <div class="camera-box">
+
     <video id="video" autoplay playsinline muted class="hidden"></video>
+
     <div class="camera-placeholder" id="cameraPlaceholder">
       برای فعال‌کردن دوربین، دکمه شروع دوربین را بزنید.
     </div>
+
   </div>
 
   <div class="gps-overlay">
-    <div>وضعیت GPS: <strong id="gpsStatus">در انتظار دریافت موقعیت</strong></div>
-    <div><small>مختصات: </small><span id="gpsCoords">هنوز دریافت نشده است</span></div>
-    <div><small>دقت مکانی: </small><span id="gpsAccuracy">---</span></div>
-    <div><small>ارتفاع: </small><span id="gpsAltitude">---</span></div>
+
+    <div>
+      وضعیت GPS:
+      <strong id="gpsStatus">در انتظار دریافت موقعیت</strong>
+    </div>
+
+    <div>
+      <small>مختصات: </small>
+      <span id="gpsCoords">هنوز دریافت نشده است</span>
+    </div>
+
+    <div>
+      <small>دقت مکانی: </small>
+      <span id="gpsAccuracy">---</span>
+    </div>
+
+    <div>
+      <small>ارتفاع: </small>
+      <span id="gpsAltitude">---</span>
+    </div>
+
   </div>
 
   <div class="capture-actions">
-    <button class="btn btn-dark" id="activateCamera">🎥 شروع دوربین</button>
-    <button class="btn btn-green" id="captureButton" disabled>📸 گرفتن عکس</button>
+
+    <button class="btn btn-dark" id="activateCamera">
+      🎥 شروع دوربین
+    </button>
+
+    <button class="btn btn-green" id="captureButton" disabled>
+      📸 گرفتن عکس
+    </button>
+
   </div>
+
   <p class="muted" style="font-size:11px;line-height:2">
     برای ثبت بهترین موقعیت، چند لحظه در محل ثابت بمانید.
-    مختصات و دقت GPS در لحظه ثبت عکس ذخیره خواهد شد.
+    مختصات و دقت GPS در هنگام ثبت عکس ذخیره خواهد شد.
   </p>
+
 </section>
 
 <!-- آرشیو -->
 <section class="view" id="archive">
+
   <div class="page-head">
     <h2>آرشیو تصاویر</h2>
     <span class="muted" id="archiveCount">۰ عکس</span>
   </div>
+
   <div id="allPhotos" class="photo-list"></div>
+
 </section>
 
 <!-- نقشه -->
 <section class="view" id="map">
+
   <div class="page-head">
     <h2>مکان‌های ثبت‌شده</h2>
   </div>
-  <div class="notice">برای نمایش هر نقطه، روی دکمه نقشه آن عکس بزنید.</div>
+
+  <div class="notice">
+    برای نمایش هر نقطه، روی دکمه نقشه آن عکس بزنید.
+  </div>
+
   <div id="mapLocations" style="margin-top:14px"></div>
+
 </section>
 
 </main>
 
-<footer>GeoSnap Pro · اطلاعات عکس‌ها در حافظه همین دستگاه ذخیره می‌شود.</footer>
-
-<nav>
-  <button class="active" data-page="home"><span>⌂</span>خانه</button>
-  <button data-page="camera"><span>📷</span>دوربین</button>
-  <button data-page="archive"><span>▧</span>آرشیو</button>
-  <button data-page="map"><span>📍</span>مکان‌ها</button>
-</nav>
+<footer>
+  GeoSnap Pro · اطلاعات عکس‌ها در حافظه همین دستگاه ذخیره می‌شود.
+</footer>
 
 </div>
 
-<!-- فرم جزئیات عکس -->
+<!-- نوار پایین -->
+<nav>
+
+  <button class="active" data-page="home">
+    <span>⌂</span>
+    خانه
+  </button>
+
+  <button data-page="camera">
+    <span>📷</span>
+    دوربین
+  </button>
+
+  <button data-page="archive">
+    <span>▧</span>
+    آرشیو
+  </button>
+
+  <button data-page="map">
+    <span>📍</span>
+    مکان‌ها
+  </button>
+
+</nav>
+
+<!-- فرم اطلاعات عکس -->
 <div class="modal hidden" id="detailModal">
+
   <div class="modal-card">
+
     <div class="page-head">
       <h2>اطلاعات عکس</h2>
       <button class="back" id="closeDetail">بستن</button>
@@ -306,18 +701,22 @@ footer {text-align:center;color:#91a0a5;font-size:10px;padding:15px}
     <div class="coords" id="detailCoords"></div>
 
     <form id="detailForm">
+
       <div class="field">
         <label>عنوان عکس یا محل</label>
-        <input id="fieldTitle" placeholder="مثلاً بازدید از ساختمان شماره ۱">
+        <input id="fieldTitle"
+               placeholder="مثلاً بازدید از ساختمان شماره ۱">
       </div>
 
       <div class="field">
         <label>نام پروژه یا مشتری</label>
-        <input id="fieldProject" placeholder="نام پروژه را بنویسید">
+        <input id="fieldProject"
+               placeholder="نام پروژه را بنویسید">
       </div>
 
       <div class="field">
         <label>دسته‌بندی</label>
+
         <select id="fieldCategory">
           <option>بازدید پروژه</option>
           <option>ساختمان</option>
@@ -327,500 +726,994 @@ footer {text-align:center;color:#91a0a5;font-size:10px;padding:15px}
           <option>طبیعت و محیط</option>
           <option>سایر</option>
         </select>
+
       </div>
 
       <div class="field">
         <label>توضیحات شما</label>
-        <textarea id="fieldNotes" placeholder="هر توضیحی درباره این محل بنویسید..."></textarea>
+        <textarea id="fieldNotes"
+          placeholder="هر توضیحی درباره این محل بنویسید..."></textarea>
       </div>
 
-      <button class="btn btn-green" type="submit" style="width:100%">ذخیره اطلاعات</button>
+      <button class="btn btn-green" type="submit" style="width:100%">
+        ذخیره اطلاعات
+      </button>
+
     </form>
 
     <div class="capture-actions">
-      <button class="btn btn-dark" id="openMapButton">🗺️ نمایش روی نقشه</button>
-      <button class="btn btn-light" id="shareButton">اشتراک‌گذاری</button>
+
+      <button class="btn btn-dark" id="openMapButton">
+        🗺️ نمایش روی نقشه
+      </button>
+
+      <button class="btn btn-light" id="shareButton">
+        اشتراک‌گذاری
+      </button>
+
     </div>
-    <button class="btn btn-danger" id="deleteButton" style="width:100%;margin-top:10px">حذف عکس</button>
+
+    <button class="btn btn-danger" id="deleteButton"
+            style="width:100%;margin-top:10px">
+      حذف عکس
+    </button>
+
   </div>
+
 </div>
 
 <div id="toast" style="
-position:fixed;bottom:85px;left:50%;transform:translateX(-50%);
-background:#102b35;color:white;padding:12px 18px;border-radius:12px;
-z-index:60;display:none;max-width:90%;text-align:center;font-size:12px">
+position:fixed;
+bottom:85px;
+left:50%;
+transform:translateX(-50%);
+background:#102b35;
+color:white;
+padding:12px 18px;
+border-radius:12px;
+z-index:60;
+display:none;
+max-width:90%;
+text-align:center;
+font-size:12px">
 </div>
 
 <script>
+
 const DB_NAME = "GeoSnapProDB";
 const STORE = "photos";
-
-const $ = id => document.getElementById(id);
 
 let cameraStream = null;
 let watchId = null;
 let lastPosition = null;
 let currentRecord = null;
-let currentPage = "home";
+
+const $ = id => document.getElementById(id);
 
 function toast(message) {
+
   const el = $("toast");
+
   el.textContent = message;
   el.style.display = "block";
+
   clearTimeout(window.toastTimer);
-  window.toastTimer = setTimeout(() => el.style.display = "none", 3200);
+
+  window.toastTimer = setTimeout(() => {
+    el.style.display = "none";
+  }, 3200);
+
 }
 
 function escapeHTML(value) {
+
   return String(value ?? "").replace(/[&<>"']/g, c => ({
-    "&":"&amp;","<":"&lt;",">":"&gt;",
-    '"':"&quot;","'":"&#39;"
+    "&":"&amp;",
+    "<":"&lt;",
+    ">":"&gt;",
+    '"':"&quot;",
+    "'":"&#39;"
   })[c]);
+
 }
 
+// پایگاه اطلاعات داخلی گوشی
 function openDB() {
-  return new Promise((resolve, reject) => {
-    const request = indexedDB.open(DB_NAME, 1);
+
+  return new Promise((resolve,reject) => {
+
+    const request = indexedDB.open(DB_NAME,1);
+
     request.onupgradeneeded = () => {
+
       if (!request.result.objectStoreNames.contains(STORE)) {
-        request.result.createObjectStore(STORE, {keyPath:"id"});
+
+        request.result.createObjectStore(STORE,{
+          keyPath:"id"
+        });
+
       }
+
     };
+
     request.onsuccess = () => resolve(request.result);
     request.onerror = () => reject(request.error);
+
   });
+
 }
 
-async function dbOperation(mode, action) {
+async function dbOperation(mode,action) {
+
   const db = await openDB();
-  return new Promise((resolve, reject) => {
-    const tx = db.transaction(STORE, mode);
+
+  return new Promise((resolve,reject) => {
+
+    const tx = db.transaction(STORE,mode);
     const store = tx.objectStore(STORE);
+
     let request;
-    try { request = action(store); }
-    catch(e) { reject(e); return; }
+
+    try {
+      request = action(store);
+    } catch(e) {
+      reject(e);
+      return;
+    }
+
     tx.oncomplete = () => resolve(request?.result);
     tx.onerror = () => reject(tx.error);
     tx.onabort = () => reject(tx.error || new Error("Database aborted"));
+
   });
+
 }
 
-const saveRecord = r => dbOperation("readwrite", s => s.put(r));
-const deleteRecord = id => dbOperation("readwrite", s => s.delete(id));
-const getRecords = async () => (await dbOperation("readonly", s => s.getAll())) || [];
+const saveRecord = r =>
+  dbOperation("readwrite",s => s.put(r));
+
+const deleteRecord = id =>
+  dbOperation("readwrite",s => s.delete(id));
+
+const getRecords = async () =>
+  (await dbOperation("readonly",s => s.getAll())) || [];
 
 function formatDate(value) {
-  return new Intl.DateTimeFormat("fa-IR", {
-    dateStyle:"medium",timeStyle:"short"
+
+  return new Intl.DateTimeFormat("fa-IR",{
+    dateStyle:"medium",
+    timeStyle:"short"
   }).format(new Date(value));
+
 }
 
-function formatNumber(n, digits=6) {
+function formatNumber(n,digits=6) {
+
   return Number(n).toFixed(digits);
+
 }
 
 function mapUrl(r) {
+
   return "https://www.openstreetmap.org/?mlat=" +
-    encodeURIComponent(r.lat) + "&mlon=" +
-    encodeURIComponent(r.lon) + "#map=18/" +
-    encodeURIComponent(r.lat) + "/" + encodeURIComponent(r.lon);
+    encodeURIComponent(r.lat) +
+    "&mlon=" +
+    encodeURIComponent(r.lon) +
+    "#map=18/" +
+    encodeURIComponent(r.lat) +
+    "/" +
+    encodeURIComponent(r.lon);
+
 }
 
+// تغییر صفحات
 function showPage(name) {
-  if (name !== "camera") stopCamera();
-  currentPage = name;
-  document.querySelectorAll(".view").forEach(v => v.classList.remove("active"));
+
+  if(name !== "camera") {
+    stopCamera();
+  }
+
+  document.querySelectorAll(".view").forEach(v => {
+    v.classList.remove("active");
+  });
+
   $(name).classList.add("active");
-  document.querySelectorAll("nav button").forEach(b =>
-    b.classList.toggle("active", b.dataset.page === name)
-  );
-  if (name === "archive" || name === "home" || name === "map") renderAll();
+
+  document.querySelectorAll("nav button").forEach(b => {
+    b.classList.toggle("active",b.dataset.page === name);
+  });
+
+  if(name === "archive" || name === "home" || name === "map") {
+    renderAll();
+  }
+
 }
 
-document.querySelectorAll("[data-page]").forEach(b =>
-  b.addEventListener("click", () => {
+document.querySelectorAll("[data-page]").forEach(b => {
+
+  b.addEventListener("click",() => {
+
     const p = b.dataset.page;
-    if (p === "camera") startCameraPage();
-    else showPage(p);
-  })
-);
+
+    if(p === "camera") {
+      startCameraPage();
+    } else {
+      showPage(p);
+    }
+
+  });
+
+});
 
 async function startCameraPage() {
+
   showPage("camera");
+
   $("video").classList.add("hidden");
   $("cameraPlaceholder").classList.remove("hidden");
-  $("cameraPlaceholder").textContent = "برای فعال‌کردن دوربین، دکمه شروع دوربین را بزنید.";
+
+  $("cameraPlaceholder").textContent =
+    "برای فعال‌کردن دوربین، دکمه شروع دوربین را بزنید.";
+
 }
 
+// فعال‌سازی دوربین گوشی
 async function activateCamera() {
+
   try {
-    if (!window.isSecureContext) {
+
+    if(!window.isSecureContext) {
       throw new Error("دسترسی دوربین و GPS فقط در محیط امن HTTPS فعال می‌شود.");
     }
-    if (!navigator.mediaDevices?.getUserMedia) {
+
+    if(!navigator.mediaDevices?.getUserMedia) {
       throw new Error("دوربین در این مرورگر پشتیبانی نمی‌شود.");
     }
 
     cameraStream = await navigator.mediaDevices.getUserMedia({
+
       audio:false,
+
       video:{
         facingMode:{ideal:"environment"},
         width:{ideal:1920},
         height:{ideal:1080}
       }
+
     });
 
     $("video").srcObject = cameraStream;
+
     await $("video").play();
+
     $("video").classList.remove("hidden");
     $("cameraPlaceholder").classList.add("hidden");
+
     $("captureButton").disabled = false;
     $("activateCamera").disabled = true;
 
     beginGPS();
+
     toast("دوربین فعال شد؛ در حال دریافت موقعیت GPS");
-  } catch (error) {
+
+  } catch(error) {
+
     toast(error.message || "دسترسی به دوربین امکان‌پذیر نیست.");
+
   }
+
 }
 
+// دریافت پیوسته موقعیت GPS
 function beginGPS() {
-  if (!navigator.geolocation) {
+
+  if(!navigator.geolocation) {
+
     $("gpsStatus").textContent = "GPS پشتیبانی نمی‌شود";
     return;
+
   }
 
   $("gpsStatus").textContent = "در حال دریافت موقعیت...";
+
   watchId = navigator.geolocation.watchPosition(
+
     position => {
+
       lastPosition = position;
       showGPS(position);
+
     },
+
     error => {
+
       const messages = {
         1:"اجازه GPS داده نشده است",
         2:"موقعیت در دسترس نیست",
         3:"زمان دریافت GPS تمام شد"
       };
-      $("gpsStatus").textContent = messages[error.code] || "خطای GPS";
+
+      $("gpsStatus").textContent =
+        messages[error.code] || "خطای GPS";
+
     },
+
     {
       enableHighAccuracy:true,
       maximumAge:0,
       timeout:25000
     }
+
   );
+
 }
 
-function showGPS(p) {
-  const c = p.coords;
+function showGPS(position) {
+
+  const c = position.coords;
+
   $("gpsStatus").textContent = "موقعیت دریافت شد ✓";
+
   $("gpsCoords").textContent =
-    formatNumber(c.latitude) + " , " + formatNumber(c.longitude);
+    formatNumber(c.latitude) +
+    " , " +
+    formatNumber(c.longitude);
+
   $("gpsAccuracy").textContent =
     "± " + Math.round(c.accuracy) + " متر";
+
   $("gpsAltitude").textContent =
-    c.altitude == null ? "در دسترس نیست" :
+    c.altitude == null ?
+    "در دسترس نیست" :
     Number(c.altitude).toFixed(1) + " متر";
+
 }
 
+// دریافت موقعیت تازه در زمان ثبت عکس
 function getFreshPosition() {
-  if (lastPosition && Date.now()-lastPosition.timestamp < 10000) {
-    return Promise.resolve(lastPosition);
-  }
 
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve,reject) => {
+
+    if(!navigator.geolocation) {
+      reject(new Error("GPS گوشی در دسترس نیست."));
+      return;
+    }
+
     navigator.geolocation.getCurrentPosition(
-      p => {
-        lastPosition = p;
-        showGPS(p);
-        resolve(p);
+
+      position => {
+
+        lastPosition = position;
+        showGPS(position);
+
+        resolve(position);
+
       },
-      reject,
-      {enableHighAccuracy:true,maximumAge:0,timeout:25000}
+
+      error => reject(error),
+
+      {
+        enableHighAccuracy:true,
+        maximumAge:0,
+        timeout:25000
+      }
+
     );
+
   });
+
 }
 
+// خاموش‌کردن دوربین
 function stopCamera() {
-  if (cameraStream) {
-    cameraStream.getTracks().forEach(t => t.stop());
+
+  if(cameraStream) {
+
+    cameraStream.getTracks().forEach(track => {
+      track.stop();
+    });
+
     cameraStream = null;
+
   }
-  if (watchId !== null) {
+
+  if(watchId !== null) {
+
     navigator.geolocation.clearWatch(watchId);
     watchId = null;
+
   }
+
   $("video").srcObject = null;
   $("video").classList.add("hidden");
+
   $("cameraPlaceholder").classList.remove("hidden");
+
   $("captureButton").disabled = true;
   $("activateCamera").disabled = false;
+
 }
 
-$("startCamera").addEventListener("click", startCameraPage);
-$("activateCamera").addEventListener("click", activateCamera);
-$("closeCamera").addEventListener("click", () => showPage("home"));
+$("startCamera").addEventListener("click",startCameraPage);
 
-$("captureButton").addEventListener("click", async () => {
-  if (!cameraStream || !$("video").videoWidth) {
+$("activateCamera").addEventListener("click",activateCamera);
+
+$("closeCamera").addEventListener("click",() => {
+  showPage("home");
+});
+
+// گرفتن عکس و ذخیره مختصات همان موقعیت
+$("captureButton").addEventListener("click",async () => {
+
+  if(!cameraStream || !$("video").videoWidth) {
+
     toast("ابتدا دوربین را فعال کنید.");
     return;
+
   }
 
   const button = $("captureButton");
+
   button.disabled = true;
   button.textContent = "در حال ثبت...";
 
   try {
+
     toast("در حال دریافت موقعیت تازه؛ لطفاً ثابت بمانید.");
+
     const position = await getFreshPosition();
+
     const c = position.coords;
 
-    if (c.accuracy > 50) {
+    if(c.accuracy > 50) {
+
       const ok = confirm(
-        "دقت GPS فعلاً حدود " + Math.round(c.accuracy) +
+        "دقت GPS فعلاً حدود " +
+        Math.round(c.accuracy) +
         " متر است. برای دقت بهتر چند لحظه در محل ثابت بمانید.\n\n" +
         "آیا با همین دقت عکس ثبت شود؟"
       );
-      if (!ok) return;
+
+      if(!ok) return;
+
     }
 
-    const captureTime = new Date().toISOString();
     const canvas = document.createElement("canvas");
+
     canvas.width = $("video").videoWidth;
     canvas.height = $("video").videoHeight;
 
     const context = canvas.getContext("2d");
-    context.drawImage($("video"),0,0,canvas.width,canvas.height);
 
-    const image = await new Promise((resolve,reject) => {
+    context.drawImage(
+      $("video"),
+      0,
+      0,
+      canvas.width,
+      canvas.height
+    );
+
+    const captureTime = new Date().toISOString();
+
+    const photo = await new Promise((resolve,reject) => {
+
       canvas.toBlob(
-        blob => blob ? resolve(blob) : reject(new Error("ساخت عکس ناموفق بود")),
-        "image/jpeg",0.92
+
+        blob => {
+          if(blob) resolve(blob);
+          else reject(new Error("ساخت عکس ناموفق بود"));
+        },
+
+        "image/jpeg",
+
+        0.92
+
       );
+
     });
 
     const record = {
+
       id:crypto.randomUUID(),
-      image,
+
+      image:photo,
+
       lat:c.latitude,
       lon:c.longitude,
+
       accuracy:c.accuracy,
+
       altitude:c.altitude,
       altitudeAccuracy:c.altitudeAccuracy,
+
       heading:c.heading,
       speed:c.speed,
+
       gpsTime:new Date(position.timestamp).toISOString(),
       captureTime,
+
       title:"",
       project:"",
       category:"بازدید پروژه",
       notes:""
+
     };
 
     await saveRecord(record);
+
     stopCamera();
+
     await renderAll();
+
     showPage("archive");
+
     openDetail(record.id);
+
     toast("عکس و موقعیت مکانی ذخیره شد.");
-  } catch (error) {
-    let msg = error.message || "خطا در ثبت عکس";
-    if (error.code === 1) msg = "مجوز موقعیت مکانی را در تنظیمات گوشی فعال کنید.";
-    if (error.code === 2) msg = "GPS موقعیت را پیدا نکرد؛ فضای باز را امتحان کنید.";
-    if (error.code === 3) msg = "دریافت GPS زمان‌بر شد؛ دوباره تلاش کنید.";
-    toast(msg);
+
+  } catch(error) {
+
+    let message = error.message || "خطا در ثبت عکس";
+
+    if(error.code === 1) {
+      message = "مجوز موقعیت مکانی را در تنظیمات گوشی فعال کنید.";
+    }
+
+    if(error.code === 2) {
+      message = "GPS موقعیت را پیدا نکرد؛ فضای باز را امتحان کنید.";
+    }
+
+    if(error.code === 3) {
+      message = "دریافت GPS زمان‌بر شد؛ دوباره تلاش کنید.";
+    }
+
+    toast(message);
+
   } finally {
+
     button.disabled = !cameraStream;
     button.textContent = "📸 گرفتن عکس";
+
   }
+
 });
 
+// نمایش عکس‌ها و اطلاعات
 async function renderAll() {
-  try {
-    const records = await getRecords();
-    records.sort((a,b)=>new Date(b.captureTime)-new Date(a.captureTime));
 
-    $("photoCount").textContent = records.length.toLocaleString("fa-IR");
+  try {
+
+    const records = await getRecords();
+
+    records.sort((a,b) =>
+      new Date(b.captureTime) -
+      new Date(a.captureTime)
+    );
+
+    $("photoCount").textContent =
+      records.length.toLocaleString("fa-IR");
+
     $("archiveCount").textContent =
       records.length.toLocaleString("fa-IR") + " عکس";
 
-    renderPhotoList($("recentPhotos"),records.slice(0,4),true);
-    renderPhotoList($("allPhotos"),records,false);
+    renderPhotoList(
+      $("recentPhotos"),
+      records.slice(0,4),
+      true
+    );
 
-    $("mapLocations").innerHTML = records.length ? records.map(r => `
-      <div class="panel">
-        <strong>${escapeHTML(r.title || "عکس بدون عنوان")}</strong>
-        <p class="muted" style="font-size:11px">${formatDate(r.captureTime)}</p>
-        <div class="coords">${formatNumber(r.lat)}, ${formatNumber(r.lon)}</div>
-        <a class="map-link" target="_blank" rel="noopener" href="${mapUrl(r)}">
-          مشاهده نقطه روی OpenStreetMap ↗
-        </a>
-      </div>
-    `).join("") : '<div class="empty">هنوز مکانی ثبت نکرده‌اید.</div>';
-  } catch(e) {
+    renderPhotoList(
+      $("allPhotos"),
+      records,
+      false
+    );
+
+    $("mapLocations").innerHTML = records.length ?
+
+      records.map(r => `
+
+        <div class="panel">
+
+          <strong>
+            ${escapeHTML(r.title || "عکس بدون عنوان")}
+          </strong>
+
+          <p class="muted" style="font-size:11px">
+            ${formatDate(r.captureTime)}
+          </p>
+
+          <div class="coords">
+            ${formatNumber(r.lat)}, ${formatNumber(r.lon)}
+          </div>
+
+          <a class="map-link"
+             target="_blank"
+             rel="noopener"
+             href="${mapUrl(r)}">
+
+            مشاهده نقطه روی OpenStreetMap ↗
+
+          </a>
+
+        </div>
+
+      `).join("") :
+
+      '<div class="empty">هنوز مکانی ثبت نکرده‌اید.</div>';
+
+  } catch(error) {
+
     toast("خطا در خواندن اطلاعات ذخیره‌شده.");
+
   }
+
 }
 
-function renderPhotoList(container, records, compact) {
-  if (!records.length) {
-    container.innerHTML = '<div class="empty" style="grid-column:1/-1">هنوز عکسی ثبت نشده است.<br>از دکمه ثبت عکس جدید استفاده کنید.</div>';
+// ساخت آرشیو تصاویر
+function renderPhotoList(container,records,compact) {
+
+  if(!records.length) {
+
+    container.innerHTML =
+      '<div class="empty" style="grid-column:1/-1">' +
+      'هنوز عکسی ثبت نشده است.<br>' +
+      'از دکمه ثبت عکس جدید استفاده کنید.' +
+      '</div>';
+
     return;
+
   }
 
   container.innerHTML = records.map(r => `
+
     <div class="photo-card" data-open="${escapeHTML(r.id)}">
-      <img src="${URL.createObjectURL(r.image)}" alt="عکس ثبت‌شده">
+
+      <img
+        src="${URL.createObjectURL(r.image)}"
+        alt="عکس ثبت‌شده"
+      >
+
       <div class="photo-info">
-        <strong>${escapeHTML(r.title || "عکس بدون عنوان")}</strong>
-        <small>${escapeHTML(formatDate(r.captureTime))}</small>
-        ${compact ? "" : `<small>دقت GPS: ±${Math.round(r.accuracy)} m</small>`}
+
+        <strong>
+          ${escapeHTML(r.title || "عکس بدون عنوان")}
+        </strong>
+
+        <small>
+          ${escapeHTML(formatDate(r.captureTime))}
+        </small>
+
+        ${compact ? "" :
+          `<small>دقت GPS: ±${Math.round(r.accuracy)} m</small>`
+        }
+
       </div>
+
     </div>
+
   `).join("");
 
-  container.querySelectorAll("[data-open]").forEach(card =>
-    card.addEventListener("click",()=>openDetail(card.dataset.open))
-  );
+  container.querySelectorAll("[data-open]").forEach(card => {
+
+    card.addEventListener("click",() => {
+      openDetail(card.dataset.open);
+    });
+
+  });
+
 }
 
+// نمایش جزئیات یک عکس
 async function openDetail(id) {
+
   const records = await getRecords();
-  currentRecord = records.find(r=>r.id===id);
-  if (!currentRecord) return;
 
-  $("detailImage").src = URL.createObjectURL(currentRecord.image);
+  currentRecord = records.find(r => r.id === id);
+
+  if(!currentRecord) return;
+
+  $("detailImage").src =
+    URL.createObjectURL(currentRecord.image);
+
   $("detailCoords").innerHTML =
-    "Latitude: " + formatNumber(currentRecord.lat) +
-    "<br>Longitude: " + formatNumber(currentRecord.lon) +
-    "<br>GPS accuracy: ±" + Math.round(currentRecord.accuracy) + " m" +
-    "<br>Altitude: " +
-    (currentRecord.altitude == null ? "Not available" :
-     Number(currentRecord.altitude).toFixed(1) + " m") +
-    "<br>Photo time: " + escapeHTML(formatDate(currentRecord.captureTime)) +
-    "<br>GPS time: " + escapeHTML(formatDate(currentRecord.gpsTime));
 
-  $("fieldTitle").value = currentRecord.title || "";
-  $("fieldProject").value = currentRecord.project || "";
-  $("fieldCategory").value = currentRecord.category || "بازدید پروژه";
-  $("fieldNotes").value = currentRecord.notes || "";
+    "Latitude: " +
+    formatNumber(currentRecord.lat) +
+
+    "<br>Longitude: " +
+    formatNumber(currentRecord.lon) +
+
+    "<br>GPS accuracy: ±" +
+    Math.round(currentRecord.accuracy) +
+    " m" +
+
+    "<br>Altitude: " +
+
+    (currentRecord.altitude == null ?
+      "Not available" :
+      Number(currentRecord.altitude).toFixed(1) + " m"
+    ) +
+
+    "<br>Photo time: " +
+    escapeHTML(formatDate(currentRecord.captureTime)) +
+
+    "<br>GPS time: " +
+    escapeHTML(formatDate(currentRecord.gpsTime));
+
+  $("fieldTitle").value =
+    currentRecord.title || "";
+
+  $("fieldProject").value =
+    currentRecord.project || "";
+
+  $("fieldCategory").value =
+    currentRecord.category || "بازدید پروژه";
+
+  $("fieldNotes").value =
+    currentRecord.notes || "";
 
   $("detailModal").classList.remove("hidden");
+
 }
 
-$("detailForm").addEventListener("submit", async event => {
-  event.preventDefault();
-  if (!currentRecord) return;
+// ذخیره توضیحات
+$("detailForm").addEventListener("submit",async event => {
 
-  currentRecord.title = $("fieldTitle").value.trim();
-  currentRecord.project = $("fieldProject").value.trim();
-  currentRecord.category = $("fieldCategory").value;
-  currentRecord.notes = $("fieldNotes").value.trim();
+  event.preventDefault();
+
+  if(!currentRecord) return;
+
+  currentRecord.title =
+    $("fieldTitle").value.trim();
+
+  currentRecord.project =
+    $("fieldProject").value.trim();
+
+  currentRecord.category =
+    $("fieldCategory").value;
+
+  currentRecord.notes =
+    $("fieldNotes").value.trim();
 
   await saveRecord(currentRecord);
+
   $("detailModal").classList.add("hidden");
+
   await renderAll();
+
   toast("توضیحات عکس ذخیره شد.");
+
 });
 
-$("closeDetail").addEventListener("click",()=>{
+// بستن صفحه اطلاعات
+$("closeDetail").addEventListener("click",() => {
+
   $("detailModal").classList.add("hidden");
+
   currentRecord = null;
+
 });
 
-$("openMapButton").addEventListener("click",()=>{
-  if(currentRecord) window.open(mapUrl(currentRecord),"_blank","noopener");
+// نمایش نقطه روی نقشه
+$("openMapButton").addEventListener("click",() => {
+
+  if(currentRecord) {
+
+    window.open(
+      mapUrl(currentRecord),
+      "_blank",
+      "noopener"
+    );
+
+  }
+
 });
 
-$("shareButton").addEventListener("click",async()=>{
+// اشتراک‌گذاری
+$("shareButton").addEventListener("click",async () => {
+
   if(!currentRecord) return;
+
   const r = currentRecord;
+
   const text = [
+
     r.title || "عکس GeoSnap Pro",
-    "Latitude: "+r.lat,
-    "Longitude: "+r.lon,
-    "GPS accuracy: ±"+Math.round(r.accuracy)+" m",
-    "Date: "+r.captureTime,
-    "Notes: "+(r.notes || ""),
+
+    "Latitude: " + r.lat,
+
+    "Longitude: " + r.lon,
+
+    "GPS accuracy: ±" + Math.round(r.accuracy) + " m",
+
+    "Date: " + r.captureTime,
+
+    "Notes: " + (r.notes || ""),
+
     mapUrl(r)
+
   ].join("\n");
 
   try {
+
     if(navigator.share) {
-      const file = new File([r.image],"geosnap-photo.jpg",{type:"image/jpeg"});
+
+      const file = new File(
+        [r.image],
+        "geosnap-photo.jpg",
+        {type:"image/jpeg"}
+      );
+
       if(navigator.canShare?.({files:[file]})) {
-        await navigator.share({title:r.title || "GeoSnap Pro",text,files:[file]});
+
+        await navigator.share({
+
+          title:r.title || "GeoSnap Pro",
+          text,
+          files:[file]
+
+        });
+
       } else {
-        await navigator.share({title:r.title || "GeoSnap Pro",text});
+
+        await navigator.share({
+
+          title:r.title || "GeoSnap Pro",
+          text
+
+        });
+
       }
+
     } else {
+
       await navigator.clipboard.writeText(text);
+
       toast("اطلاعات مکان کپی شد.");
+
     }
-  } catch(e) {
-    if(e.name !== "AbortError") toast("اشتراک‌گذاری انجام نشد.");
+
+  } catch(error) {
+
+    if(error.name !== "AbortError") {
+      toast("اشتراک‌گذاری انجام نشد.");
+    }
+
   }
+
 });
 
-$("deleteButton").addEventListener("click",async()=>{
+// حذف عکس
+$("deleteButton").addEventListener("click",async () => {
+
   if(!currentRecord) return;
-  if(!confirm("این عکس و اطلاعات مربوط به آن حذف شود؟")) return;
 
-  await deleteRecord(currentRecord.id);
-  currentRecord = null;
-  $("detailModal").classList.add("hidden");
-  await renderAll();
-  toast("عکس حذف شد.");
-});
-
-$("backupButton").addEventListener("click",async()=>{
-  const records = await getRecords();
-  if(!records.length) {
-    toast("هنوز اطلاعاتی برای پشتیبان‌گیری وجود ندارد.");
+  if(!confirm("این عکس و اطلاعات مربوط به آن حذف شود؟")) {
     return;
   }
 
-  const backup = await Promise.all(records.map(async r => ({
-    ...r,
-    imageBase64:await blobToBase64(r.image),
-    image:undefined
-  })));
+  await deleteRecord(currentRecord.id);
 
-  const blob = new Blob(
-    [JSON.stringify({app:"GeoSnap Pro",version:1,records:backup},null,2)],
-    {type:"application/json"}
-  );
+  currentRecord = null;
 
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement("a");
-  a.href=url;
-  a.download="GeoSnap-Backup-"+new Date().toISOString().slice(0,10)+".json";
-  a.click();
-  URL.revokeObjectURL(url);
-  toast("فایل پشتیبان آماده شد.");
+  $("detailModal").classList.add("hidden");
+
+  await renderAll();
+
+  toast("عکس حذف شد.");
+
 });
 
+// تبدیل Blob به Base64
 function blobToBase64(blob) {
-  return new Promise((resolve,reject)=>{
+
+  return new Promise((resolve,reject) => {
+
     const reader = new FileReader();
-    reader.onload=()=>resolve(reader.result);
-    reader.onerror=reject;
+
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = reject;
+
     reader.readAsDataURL(blob);
+
   });
+
 }
 
-// آماده‌سازی برنامه برای اجرای آفلاین پس از اولین بارگذاری
-if ("serviceWorker" in navigator && location.protocol.startsWith("http")) {
-  window.addEventListener("load",()=>{
-    navigator.serviceWorker.register("./sw.js").catch(e=>
-      console.warn("Service worker registration:",e)
+// پشتیبان‌گیری
+$("backupButton").addEventListener("click",async () => {
+
+  try {
+
+    const records = await getRecords();
+
+    if(!records.length) {
+
+      toast("هنوز اطلاعاتی برای پشتیبان‌گیری وجود ندارد.");
+      return;
+
+    }
+
+    const backup = await Promise.all(
+
+      records.map(async r => ({
+
+        ...r,
+
+        imageBase64:await blobToBase64(r.image),
+
+        image:undefined
+
+      }))
+
     );
+
+    const blob = new Blob(
+
+      [JSON.stringify({
+
+        app:"GeoSnap Pro",
+        version:1,
+        records:backup
+
+      },null,2)],
+
+      {type:"application/json"}
+
+    );
+
+    const url = URL.createObjectURL(blob);
+
+    const a = document.createElement("a");
+
+    a.href = url;
+
+    a.download =
+      "GeoSnap-Backup-" +
+      new Date().toISOString().slice(0,10) +
+      ".json";
+
+    a.click();
+
+    URL.revokeObjectURL(url);
+
+    toast("فایل پشتیبان آماده شد.");
+
+  } catch(error) {
+
+    toast("ساخت فایل پشتیبان ناموفق بود.");
+
+  }
+
+});
+
+// ثبت Service Worker برای اجرای آفلاین
+if(
+  "serviceWorker" in navigator &&
+  location.protocol.startsWith("http")
+) {
+
+  window.addEventListener("load",() => {
+
+    navigator.serviceWorker.register("./sw.js")
+
+      .catch(error => {
+
+        console.warn(
+          "Service worker registration:",
+          error
+        );
+
+      });
+
   });
+
 }
 
+// بارگذاری اولیه اطلاعات
 renderAll();
+
 </script>
+
 </body>
 </html>
