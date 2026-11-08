@@ -1,0 +1,17 @@
+{
+  "name": "geosnap-pro",
+  "version": "1.0.0",
+  "private": true,
+  "description": "GeoSnap Pro GPS photo documentation Android app",
+  "scripts": {
+    "build:web": "mkdir -p www && cp index.html manifest.webmanifest icon-192.png icon-512.png sw.js www/"
+  },
+  "dependencies": {
+    "@capacitor/android": "8.6.0",
+    "@capacitor/core": "8.6.0"
+  },
+  "devDependencies": {
+    "@capacitor/assets": "4.0.0",
+    "@capacitor/cli": "8.6.0"
+  }
+}

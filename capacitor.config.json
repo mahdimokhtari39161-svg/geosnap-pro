@@ -1,0 +1,8 @@
+{
+  "appId": "com.mahdimokhtari.geosnap",
+  "appName": "GeoSnap Pro",
+  "webDir": "www",
+  "server": {
+    "androidScheme": "https"
+  }
+}
