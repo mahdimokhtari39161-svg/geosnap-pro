@@ -1,8 +1,9 @@
 
 {
+  "id": "./",
   "name": "GeoSnap Pro",
   "short_name": "GeoSnap",
-  "description": "GPS Photo Capture and Location Documentation",
+  "description": "ثبت تصاویر همراه با مختصات دقیق مکانی",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
