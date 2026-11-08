@@ -1,5 +1,5 @@
 
-const CACHE_NAME = "geosnap-pro-v2";
+const CACHE_NAME = "geosnap-pro-v3";
 
 const APP_FILES = [
   "./",
