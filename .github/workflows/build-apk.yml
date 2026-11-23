@@ -61,10 +61,10 @@ jobs:
 
           for entry in entries:
               if entry not in content:
-                  match = re.search(r"<application\b", content)
+                  match = re.search(r"<application\\b", content)
                   if not match:
                       raise SystemExit("Could not find application tag")
-                  content = content[:match.start()] + "\n    " + entry + content[match.start():]
+                  content = content[:match.start()] + "\\n    " + entry + content[match.start():]
 
           manifest.write_text(content, encoding="utf-8")
           print("Camera and GPS permissions added.")
@@ -73,6 +73,7 @@ jobs:
       - name: Decode and validate release keystore
         env:
           ANDROID_KEYSTORE_BASE64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+          ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
         run: |
           python3 - <<'PY'
           import base64
@@ -84,21 +85,15 @@ jobs:
           if not value:
               raise SystemExit("Missing GitHub Actions secret: ANDROID_KEYSTORE_BASE64")
 
-          # GitHub secret values may contain pasted line breaks; remove whitespace only.
-          compact = re.sub(r"\s+", "", value)
-          if not re.fullmatch(r"[A-Za-z0-9+/]*={0,2}", compact):
-              raise SystemExit(
-                  "ANDROID_KEYSTORE_BASE64 contains characters outside the Base64 alphabet. "
-                  "Re-create the secret from the complete Base64 clipboard value."
-              )
+          # Ignore accidental whitespace, quotes, and other paste-formatting characters.
+          compact = re.sub(r"[^A-Za-z0-9+/=]", "", value)
+          if not compact or len(compact) % 4 != 0 or not re.fullmatch(r"[A-Za-z0-9+/]*={0,2}", compact):
+              raise SystemExit("Keystore Base64 is empty, incomplete, or has invalid padding. Replace the secret using the complete clipboard value.")
 
           try:
               decoded = base64.b64decode(compact, validate=True)
           except Exception as exc:
-              raise SystemExit(
-                  "ANDROID_KEYSTORE_BASE64 is incomplete or has invalid Base64 padding. "
-                  "Re-copy the complete keystore Base64 value and replace the GitHub secret."
-              ) from exc
+              raise SystemExit("Keystore Base64 could not be decoded. Replace the secret using the complete clipboard value.") from exc
 
           if len(decoded) < 100:
               raise SystemExit("Decoded keystore is unexpectedly small; check the secret value.")
@@ -106,8 +101,10 @@ jobs:
           target = Path("android/app/geosnap-release.jks")
           target.parent.mkdir(parents=True, exist_ok=True)
           target.write_bytes(decoded)
-          print(f"Release keystore decoded successfully ({len(decoded)} bytes).")
+          print("Keystore data decoded. Validating JKS format and password...")
           PY
+          keytool -list -keystore android/app/geosnap-release.jks -storetype JKS -storepass "$ANDROID_KEYSTORE_PASSWORD" >/dev/null
+          echo "Release keystore validated successfully."
 
       - name: Configure release signing
         shell: bash
