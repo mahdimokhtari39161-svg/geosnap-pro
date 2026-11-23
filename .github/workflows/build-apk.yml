@@ -1,5 +1,4 @@
-
-name: Build GeoSnap Pro APK
+name: Build GeoSnap Pro Release
 
 on:
   push:
@@ -12,7 +11,7 @@ permissions:
 
 jobs:
   build-android:
-    name: Build Android APK
+    name: Build signed Android release
     runs-on: ubuntu-24.04
 
     steps:
@@ -62,28 +61,78 @@ jobs:
 
           for entry in entries:
               if entry not in content:
-                  match = re.search(r"\s*<application\b", content)
+                  match = re.search(r"\\s*<application\\b", content)
                   if not match:
                       raise SystemExit("Could not find application tag")
-                  content = content[:match.start()] + "\n    " + entry + content[match.start():]
+                  content = content[:match.start()] + "\\n    " + entry + content[match.start():]
 
           manifest.write_text(content, encoding="utf-8")
           print("Camera and GPS permissions added.")
           PY
 
+      - name: Decode release keystore
+        shell: bash
+        env:
+          ANDROID_KEYSTORE_BASE64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+        run: |
+          if [ -z "$ANDROID_KEYSTORE_BASE64" ]; then
+            echo "Missing GitHub Actions secret: ANDROID_KEYSTORE_BASE64"
+            exit 1
+          fi
+          mkdir -p android/app
+          printf '%s' "$ANDROID_KEYSTORE_BASE64" | base64 --decode > android/app/geosnap-release.jks
+          test -s android/app/geosnap-release.jks
+
+      - name: Configure release signing
+        shell: bash
+        run: |
+          cat >> android/app/build.gradle <<'GRADLE'
+
+          android {
+              signingConfigs {
+                  release {
+                      storeFile file(System.getenv("ANDROID_KEYSTORE_PATH"))
+                      storePassword System.getenv("ANDROID_KEYSTORE_PASSWORD")
+                      keyAlias System.getenv("ANDROID_KEY_ALIAS")
+                      keyPassword System.getenv("ANDROID_KEY_PASSWORD")
+                  }
+              }
+              buildTypes {
+                  release {
+                      signingConfig signingConfigs.release
+                      minifyEnabled false
+                  }
+              }
+          }
+          GRADLE
+
       - name: Sync Capacitor project
         run: npx cap sync android
 
-      - name: Build debug APK
+      - name: Build signed APK and App Bundle
+        working-directory: android
+        env:
+          ANDROID_KEYSTORE_PATH: ${{ github.workspace }}/android/app/geosnap-release.jks
+          ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+          ANDROID_KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
+          ANDROID_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
         run: |
-          cd android
           chmod +x gradlew
-          ./gradlew assembleDebug --no-daemon
+          ./gradlew assembleRelease bundleRelease --no-daemon
 
-      - name: Upload APK
+      - name: Verify APK signature
+        run: |
+          APK="android/app/build/outputs/apk/release/app-release.apk"
+          test -s "$APK"
+          jarsigner -verify -verbose -certs "$APK" >/dev/null
+          echo "Release APK exists and signature verification command completed."
+
+      - name: Upload release files
         uses: actions/upload-artifact@v4
         with:
-          name: GeoSnap-Pro-Android-APK
-          path: android/app/build/outputs/apk/debug/app-debug.apk
+          name: GeoSnap-Pro-Bazaar-Release
+          path: |
+            android/app/build/outputs/apk/release/app-release.apk
+            android/app/build/outputs/bundle/release/app-release.aab
           if-no-files-found: error
-          retention-days: 14
+          retention-days: 30
