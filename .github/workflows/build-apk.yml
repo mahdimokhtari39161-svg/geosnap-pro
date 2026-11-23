@@ -61,7 +61,7 @@ jobs:
 
           for entry in entries:
               if entry not in content:
-                  match = re.search(r"\\s*<application\\b", content)
+                  match = re.search(r"<application\\b", content)
                   if not match:
                       raise SystemExit("Could not find application tag")
                   content = content[:match.start()] + "\\n    " + entry + content[match.start():]
