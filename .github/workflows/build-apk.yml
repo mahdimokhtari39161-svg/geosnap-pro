@@ -61,10 +61,10 @@ jobs:
 
           for entry in entries:
               if entry not in content:
-                  match = re.search(r"<application\\b", content)
+                  match = re.search(r"<application\b", content)
                   if not match:
                       raise SystemExit("Could not find application tag")
-                  content = content[:match.start()] + "\\n    " + entry + content[match.start():]
+                  content = content[:match.start()] + "\n    " + entry + content[match.start():]
 
           manifest.write_text(content, encoding="utf-8")
           print("Camera and GPS permissions added.")
