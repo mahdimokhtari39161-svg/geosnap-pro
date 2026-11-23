@@ -85,7 +85,7 @@ jobs:
               raise SystemExit("Missing GitHub Actions secret: ANDROID_KEYSTORE_BASE64")
 
           # GitHub secret values may contain pasted line breaks; remove whitespace only.
-          compact = re.sub(r"\\s+", "", value)
+          compact = re.sub(r"\s+", "", value)
           if not re.fullmatch(r"[A-Za-z0-9+/]*={0,2}", compact):
               raise SystemExit(
                   "ANDROID_KEYSTORE_BASE64 contains characters outside the Base64 alphabet. "
