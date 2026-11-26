@@ -160,4 +160,56 @@ document.head.appendChild(warmTheme);
 var brandTitle=document.querySelector('header h1');
 if(brandTitle)brandTitle.style.textShadow='0 2px 12px #8e472a30';
 
+
+/* GeoSnap Pro 2.0 archive, map links, CSV and safe restore */
+var archiveTab=document.createElement('button');
+archiveTab.className='v2tab';
+archiveTab.type='button';
+archiveTab.setAttribute('data-tab','archive');
+archiveTab.textContent='🗂️ آرشیو هوشمند';
+shell.querySelector('.v2tabs').appendChild(archiveTab);
+archiveTab.onclick=function(){tab='archive';renderArchive()};
+var baseRender=render;
+render=function(){if(tab==='archive'){renderArchive();return}baseRender()};
+function renderArchive(){
+  shell.querySelectorAll('[data-tab]').forEach(function(b){b.classList.toggle('active',b.getAttribute('data-tab')==='archive')});
+  var d=load(),types=['همه موارد'].concat(Array.from(new Set(d.logs.map(function(x){return x.type||'سایر'}))));
+  content.innerHTML='<div class="v2panel"><h3>آرشیو هوشمند</h3><p class="v2hint">جستجو در یادداشت‌ها، گزارش‌ها، پرونده‌های املاک، نقاط نقشه‌برداری و فرم‌های بازرسی ذخیره‌شده روی همین دستگاه.</p><div class="v2field"><label>جستجو</label><input id="v2archiveSearch" placeholder="عنوان، پروژه، مختصات یا توضیحات"></div><div class="v2field"><label>نوع اطلاعات</label><select id="v2archiveType">'+types.map(function(t){return '<option>'+esc(t)+'</option>'}).join('')+'</select></div><p class="v2hint" id="v2archiveCount"></p><div id="v2archiveResults"></div></div><div class="v2panel"><h3>خروجی و انتقال اطلاعات</h3><p class="v2hint">از اطلاعات خود نسخه پشتیبان بگیرید یا فایل پشتیبان قبلی GeoSnap Pro را بازیابی کنید.</p><div class="v2row"><button class="v2btn" id="v2archiveCsv">خروجی CSV</button><button class="v2btn" id="v2archiveBackup">پشتیبان JSON</button></div><div class="v2field"><label>بازیابی پشتیبان JSON</label><input id="v2archiveRestore" type="file" accept=".json,application/json"></div><p class="v2hint">بازیابی، اطلاعات فعلی را با اطلاعات فایل ادغام می‌کند؛ موارد تکراری بر اساس عنوان، نوع و تاریخ حذف می‌شوند.</p></div>';
+  function paint(){
+    var data=load(),q=(document.getElementById('v2archiveSearch').value||'').trim().toLocaleLowerCase(),type=document.getElementById('v2archiveType').value;
+    var found=data.logs.filter(function(x){var hay=[x.title,x.name,x.type,x.project,x.notes,x.details,x.status,x.lat,x.lon,x.date].join(' ').toLocaleLowerCase();return (type==='همه موارد'||(x.type||'سایر')===type)&&(!q||hay.indexOf(q)>=0)}).slice().reverse();
+    document.getElementById('v2archiveCount').textContent='نمایش '+found.length+' مورد از '+data.logs.length+' رکورد';
+    document.getElementById('v2archiveResults').innerHTML=found.length?found.map(function(x){var map=(x.lat!=null&&x.lon!=null&&isFinite(Number(x.lat))&&isFinite(Number(x.lon)))?'<a target="_blank" rel="noopener" href="https://www.openstreetmap.org/?mlat='+encodeURIComponent(x.lat)+'&mlon='+encodeURIComponent(x.lon)+'#map=17/'+encodeURIComponent(x.lat)+'/'+encodeURIComponent(x.lon)+'" style="display:inline-block;margin-top:7px;color:#d96f50;font-weight:bold">نمایش نقطه روی نقشه ↗</a>':'';return item(x)+map}).join(''):'<p class="v2hint">موردی با این مشخصات پیدا نشد.</p>';
+  }
+  document.getElementById('v2archiveSearch').addEventListener('input',paint);
+  document.getElementById('v2archiveType').addEventListener('change',paint);
+  paint();
+  document.getElementById('v2archiveCsv').onclick=function(){
+    var rows=[['نوع','عنوان','پروژه','تاریخ','وضعیت','عرض جغرافیایی','طول جغرافیایی','توضیحات']];
+    load().logs.forEach(function(x){rows.push([x.type||'',x.title||x.name||'',x.project||'',x.date||'',x.status||'',x.lat==null?'':x.lat,x.lon==null?'':x.lon,x.notes||x.details||''])});
+    var csv='\uFEFF'+rows.map(function(row){return row.map(function(v){return '"'+String(v==null?'':v).replace(/"/g,'""')+'"'}).join(',')}).join('\r\n');
+    var blob=new Blob([csv],{type:'text/csv;charset=utf-8'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='GeoSnap-Pro-Archive.csv';a.click();setTimeout(function(){URL.revokeObjectURL(url)},1500);
+  };
+  document.getElementById('v2archiveBackup').onclick=function(){
+    var blob=new Blob([JSON.stringify({app:'GeoSnap Pro',version:2,workspace:load(),exportedAt:new Date().toISOString()},null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='GeoSnap-Pro-Backup-'+new Date().toISOString().slice(0,10)+'.json';a.click();setTimeout(function(){URL.revokeObjectURL(url)},1500);
+  };
+  document.getElementById('v2archiveRestore').onchange=function(e){
+    var file=e.target.files&&e.target.files[0];if(!file)return;
+    var reader=new FileReader();
+    reader.onload=function(){
+      try{
+        var parsed=JSON.parse(String(reader.result||'')),incoming=parsed.workspace||parsed;
+        if(!incoming||!Array.isArray(incoming.logs)||!Array.isArray(incoming.projects))throw new Error('ساختار فایل پشتیبان معتبر نیست.');
+        var current=load(),seen={};
+        current.logs.forEach(function(x){seen[[x.type,x.title||x.name,x.date].join('|')]=true});
+        incoming.logs.forEach(function(x){var key=[x.type,x.title||x.name,x.date].join('|');if(!seen[key]){current.logs.push(x);seen[key]=true}});
+        var projects={};current.projects.forEach(function(x){projects[[x.name,x.code].join('|')]=true});
+        incoming.projects.forEach(function(x){var key=[x.name,x.code].join('|');if(!projects[key]){current.projects.push(x);projects[key]=true}});
+        save(current);alert('بازیابی انجام شد. تعداد پروژه‌ها و رکوردها به‌روزرسانی شد.');renderArchive();
+      }catch(err){alert('فایل قابل بازیابی نیست: '+err.message)}
+    };
+    reader.readAsText(file);
+  };
+}
+
 })();
