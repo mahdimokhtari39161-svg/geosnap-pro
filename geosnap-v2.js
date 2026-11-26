@@ -109,4 +109,55 @@ v2$('v2stampDownload').onclick=function(){if(!stampImage)return;var c=v2$('v2sta
 function renderInspectionHistory(){var d=load(),items=d.logs.filter(function(x){return x.type==='فرم بازرسی'}).slice().reverse().slice(0,8);v2$('v2inspectHistory').innerHTML='<h3 style="margin-top:18px">بازرسی‌های اخیر</h3>'+(items.length?items.map(item).join(''):'<p class="v2hint">هنوز گزارشی ثبت نشده است.</p>')}
 v2$('v2inspectSave').onclick=function(){var title=v2$('v2inspectTitle').value.trim();if(!title)return alert('عنوان بازدید را وارد کنید.');var selected=Array.from(v2$('v2inspectChecks').querySelectorAll('input:checked')).map(function(x){return checks[Number(x.value)]});log({type:'فرم بازرسی',title:title,name:title,project:v2$('v2inspectProject').value,notes:v2$('v2inspectNotes').value,details:'موارد کنترل‌شده: '+selected.length+' از '+checks.length+'\n'+selected.join('، '),status:selected.length===checks.length?'همه موارد کنترل شد':'بازرسی ناقص / نیازمند پیگیری'});v2$('v2inspectTitle').value='';v2$('v2inspectProject').value='';v2$('v2inspectNotes').value='';v2$('v2inspectChecks').querySelectorAll('input').forEach(function(x){x.checked=false});renderInspectionHistory()};
 
+
+/* Warm, joyful international visual theme */
+var warmTheme=document.createElement('style');
+warmTheme.textContent=`
+:root{--warm-cream:#fff8ef;--warm-peach:#ffe2cf;--warm-coral:#ef805f;--warm-orange:#f29a48;--warm-yellow:#ffd36e;--warm-teal:#4f9b8b;--warm-ink:#49352e;--warm-muted:#8c7468}
+body{background:#fff8f1!important;color:#493b35}
+header{background:radial-gradient(circle at 85% 8%,#ffd98a 0%,transparent 26%),radial-gradient(circle at 5% 100%,#f5a28a 0%,transparent 36%),linear-gradient(125deg,#e97758 0%,#f29b61 48%,#f4bd68 100%)!important;color:#fffdf8}
+header .logo{background:linear-gradient(145deg,#fff0c9,#ffd36e)!important;color:#a64f38!important;box-shadow:0 7px 18px #9c4d3228}
+header .status{background:#fff7e82b!important;border:1px solid #fff9e65c!important}
+header .status strong{color:#fff8e9!important}
+main{background:transparent}
+.section-title{color:#67483c}
+.action{background:linear-gradient(145deg,#fffefa,#fff0e4)!important;border:1px solid #f5d8c7!important;color:#65473b!important;box-shadow:0 8px 22px #b86b3b12!important}
+.action.primary,.primary,.btn-green{background:linear-gradient(120deg,#e9785b,#f39a57)!important;color:#fff!important}
+.action.secondary{background:linear-gradient(145deg,#fffdf8,#fff3d9)!important}
+.action .emoji{filter:saturate(1.15)}
+.notice{background:#fff0d7!important;border:1px solid #f5d9a6!important;color:#795637!important}
+nav{background:#fffaf4!important;border-top:1px solid #f3dfd1!important}
+nav button{color:#98796b!important}
+nav button.active{color:#e87556!important}
+.photo-card,.panel,.modal-card{background:#fffdf9!important;border-color:#f2dfd2!important;box-shadow:0 9px 24px #a65e3d12!important}
+.photo-info strong,.page-head h2{color:#594037}
+.btn-dark{background:#725347!important}
+.btn-light{background:#fff0d9!important;color:#725347!important}
+.btn-danger{background:#fff0ed!important;color:#cf604c!important}
+.gps-overlay{background:linear-gradient(135deg,#5c9b8b,#397a70)!important}
+.v2shell{background:linear-gradient(180deg,#fff8ef,#fff1e5)!important;color:#493b35}
+.v2head{background:linear-gradient(110deg,#e97758,#f29a57 65%,#f3bd68)!important;color:#fffdf8}
+.v2head button{background:#fff5e833!important;border:1px solid #fff8e866!important}
+.v2body{padding-bottom:34px}
+.v2hint,.v2item small{color:#90796d!important}
+.v2tab{background:#fffdf9!important;border-color:#f1dccc!important;color:#765647!important}
+.v2tab.active{background:linear-gradient(120deg,#ffe3d3,#fff0ca)!important;border-color:#efa17d!important;color:#b85d45!important}
+.v2panel{background:#fffdfa!important;border-color:#f2dfd2!important;box-shadow:0 8px 23px #9e60400e!important}
+.v2panel h3{color:#65463b!important}
+.v2item{background:#fff8ef!important;border-color:#f2dfd2!important}
+.v2btn,.v2launch button{background:linear-gradient(120deg,#e9785b,#f3a04f)!important;color:#fff!important;box-shadow:0 5px 13px #d77a4b22}
+.v2launch{background:radial-gradient(circle at 90% 0%,#ffd77d 0%,transparent 38%),linear-gradient(125deg,#e9785b,#f2a15d 70%,#f4bd68)!important;border:1px solid #f6c28e!important;color:white!important;box-shadow:0 12px 28px #bd70402a!important}
+.v2launch p{color:#fff7ed!important}
+.v2field input,.v2field textarea,.v2field select{background:#fffaf5!important;border-color:#f0d9c9!important;color:#523f36!important}
+.v2field input:focus,.v2field textarea:focus,.v2field select:focus{outline:2px solid #f3b28b!important;border-color:#e98263!important}
+.v2check{background:#fff8f0;border-color:#f2dfd2}
+.v2check input{accent-color:#e9785b}
+.v2canvas{background:#fff0e3!important}
+#toast{background:#68483c!important}
+@media(hover:hover){.action:hover,.photo-card:hover,.v2panel:hover{transform:translateY(-2px);box-shadow:0 12px 27px #b96b4618!important}}
+`;
+document.head.appendChild(warmTheme);
+var brandTitle=document.querySelector('header h1');
+if(brandTitle)brandTitle.style.textShadow='0 2px 12px #8e472a30';
+
 })();
