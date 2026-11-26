@@ -38,4 +38,74 @@ if($('backup'))$('backup').onclick=function(){var blob=new Blob([JSON.stringify(
 }
 function printPage(title,body){var w=window.open('','_blank');if(!w)return alert('اجازه باز شدن پنجره چاپ را فعال کنید.');w.document.write('<!doctype html><html lang="fa" dir="rtl"><meta charset="utf-8"><title>'+esc(title)+'</title><style>body{font-family:Tahoma,Arial;padding:25px;line-height:2;color:#20343b}article{border:1px solid #ddd;border-radius:10px;padding:12px;margin:12px 0}img{max-height:420px;object-fit:contain}</style><h1>'+esc(title)+'</h1><p>GeoSnap Pro · '+new Date().toLocaleString('fa-IR')+'</p>'+body+'</html>');w.document.close();w.onload=function(){w.print()}}
 render();
+
+/* GeoSnap Pro 2.0 premium workspace enhancements */
+var premiumCss = document.createElement('style');
+premiumCss.textContent = `
+:root{--lux-ink:#0b1e29;--lux-teal:#087f70;--lux-gold:#c5a46d}
+body{background:#f4f6f7;color:#142b35}
+.app{max-width:760px}
+header{background:radial-gradient(ellipse at 90% 0%,#245b59 0%,transparent 48%),linear-gradient(135deg,#091c28 0%,#153c46 58%,#0b665d 100%);border-radius:0 0 30px 30px;padding:27px 22px 30px;box-shadow:0 16px 36px #0b26351c}
+.logo{background:linear-gradient(145deg,#d1b37d,#8d7048);color:#102b35;box-shadow:0 5px 18px #0003}
+header h1{letter-spacing:.2px;font-size:21px}
+.status{backdrop-filter:blur(10px);background:#ffffff12;border-color:#ffffff28}
+main{padding:21px}
+.action,.panel,.photo-card,.v2panel{box-shadow:0 7px 24px #122c3709;transition:transform .18s ease,box-shadow .18s ease}
+.action{border-radius:20px;min-height:125px}
+.action:active,.v2tab:active{transform:scale(.985)}
+.primary,.btn-green{background:linear-gradient(135deg,#087f70,#159b75)}
+.secondary{border-color:#e3e9e9}
+.section-title{letter-spacing:-.2px}
+nav{max-width:760px;box-shadow:0 -8px 25px #102b350b;padding-top:12px}
+nav button.active{color:#087f70}
+.panel,.modal-card{border-radius:19px}
+.v2shell{background:#f3f6f6}
+.v2head{background:linear-gradient(120deg,#091c28,#174c50);padding:19px;box-shadow:0 6px 20px #0b263522}
+.v2body{max-width:760px;padding:18px}
+.v2tab{border-radius:14px;padding:14px;border-color:#e4e9e8;font-weight:600;color:#1c3941}
+.v2tab.active{background:linear-gradient(135deg,#e2f3ed,#f5f8f5);border-color:#6eb7a0;color:#075d50}
+.v2panel{border-radius:18px;border-color:#e5ebea;padding:17px}
+.v2panel h3{color:#173943}
+.v2btn{background:linear-gradient(120deg,#087f70,#159b75);border-radius:12px;padding:14px}
+.v2field input,.v2field textarea,.v2field select{border-radius:11px;border-color:#e2e9e8}
+.v2launch{border:1px solid #c3a879;background:radial-gradient(ellipse at 95% 0%,#35665e,transparent 55%),linear-gradient(125deg,#091c28,#17434a);border-radius:21px;padding:20px;box-shadow:0 13px 30px #0c2d3924}
+.v2launch h3{font-size:17px;letter-spacing:.2px}
+.v2launch button{background:linear-gradient(120deg,#c9ae7e,#a88b5b);color:#102b35;padding:14px;border-radius:12px}
+.v2premium-tools{margin-top:14px}
+.v2premium-tools .v2btn.secondary{background:#eef4f2;color:#17423e}
+.v2canvas{width:100%;max-height:420px;object-fit:contain;background:#e9eeee;border-radius:13px;margin-top:12px}
+.v2check{display:flex;gap:9px;align-items:flex-start;padding:11px;border:1px solid #e7eceb;border-radius:11px;margin:7px 0;font-size:13px}
+.v2check input{margin-top:3px;accent-color:#087f70}
+.v2gold{color:#c5a46d}
+@media(min-width:700px){.grid{grid-template-columns:repeat(4,1fr)}}
+`;
+document.head.appendChild(premiumCss);
+var v2body=shell.querySelector('.v2body');
+var toolsPanel=document.createElement('div');
+toolsPanel.className='v2panel v2premium-tools';
+toolsPanel.innerHTML='<h3>ابزارهای حرفه‌ای</h3><p class="v2hint">ابزارهای کاربردی نسخه ۲.۰؛ رایگان و قابل استفاده روی همین دستگاه</p><div class="v2row"><button class="v2btn" type="button" id="v2stampOpen">✦ مهر اختصاصی روی عکس</button><button class="v2btn" type="button" id="v2inspectionOpen">✓ چک‌لیست بازرسی</button></div>';
+v2body.appendChild(toolsPanel);
+var stamp=document.createElement('section');
+stamp.className='v2panel hidden';
+stamp.id='v2stamp';
+stamp.innerHTML='<h3>مهر حرفه‌ای تصویر</h3><p class="v2hint">تصویر را انتخاب کنید و اطلاعات مکانی، تاریخ، نام پروژه و توضیحات را روی آن درج کنید. پردازش تصویر در خود دستگاه انجام می‌شود.</p><div class="v2field"><label>انتخاب تصویر</label><input id="v2stampFile" type="file" accept="image/*"></div><div class="v2row"><div class="v2field"><label>نام پروژه / شرکت</label><input id="v2stampProject" placeholder="Project / Company"></div><div class="v2field"><label>عنوان محل</label><input id="v2stampTitle" placeholder="Site inspection"></div></div><div class="v2row"><div class="v2field"><label>عرض جغرافیایی</label><input id="v2stampLat" placeholder="Latitude"></div><div class="v2field"><label>طول جغرافیایی</label><input id="v2stampLon" placeholder="Longitude"></div></div><div class="v2field"><label>توضیحات</label><input id="v2stampNote" placeholder="Notes (optional)"></div><button class="v2btn" id="v2stampGps" type="button">دریافت مختصات فعلی GPS</button><canvas id="v2stampCanvas" class="v2canvas"></canvas><button class="v2btn" id="v2stampDownload" type="button" disabled>ذخیره تصویر مهرخورده</button>';
+v2body.appendChild(stamp);
+var inspect=document.createElement('section');
+inspect.className='v2panel hidden';
+inspect.id='v2inspection';
+inspect.innerHTML='<h3>فرم بازرسی و بازدید</h3><p class="v2hint">موارد را علامت بزنید و نتیجه بازدید را به‌صورت آفلاین ذخیره کنید.</p><div class="v2field"><label>عنوان بازدید</label><input id="v2inspectTitle" placeholder="مثلاً بازدید مرحله اجرای پروژه"></div><div class="v2field"><label>نام پروژه / محل</label><input id="v2inspectProject" placeholder="Project name"></div><div id="v2inspectChecks"></div><div class="v2field"><label>شرح نواقص و اقدامات اصلاحی</label><textarea id="v2inspectNotes" placeholder="شرح مشاهدات، نواقص و اقدامات لازم"></textarea></div><button class="v2btn" id="v2inspectSave" type="button">ذخیره گزارش بازرسی</button><div id="v2inspectHistory"></div>';
+v2body.appendChild(inspect);
+var checks=['وضعیت عمومی محل بررسی شد','ایمنی و دسترسی بررسی شد','ابعاد و اندازه‌ها کنترل شد','کیفیت اجرا بررسی شد','مستندات تصویری ثبت شد','موارد نیازمند اصلاح مشخص شد'];
+$('v2inspectChecks').innerHTML=checks.map(function(x,i){return '<label class="v2check"><input type="checkbox" value="'+i+'"><span>'+x+'</span></label>'}).join('');
+$('v2stampOpen').onclick=function(){stamp.classList.toggle('hidden');inspect.classList.add('hidden');stamp.scrollIntoView({behavior:'smooth',block:'start'})};
+$('v2inspectionOpen').onclick=function(){inspect.classList.toggle('hidden');stamp.classList.add('hidden');renderInspectionHistory();inspect.scrollIntoView({behavior:'smooth',block:'start'})};
+var stampImage=null,stampUrl=null;
+$('v2stampFile').onchange=function(e){var file=e.target.files&&e.target.files[0];if(!file)return;if(!file.type.startsWith('image/')){alert('لطفاً یک تصویر معتبر انتخاب کنید.');return}if(stampUrl)URL.revokeObjectURL(stampUrl);stampUrl=URL.createObjectURL(file);stampImage=new Image();stampImage.onload=drawStamp;stampImage.onerror=function(){alert('خواندن تصویر ممکن نشد.')};stampImage.src=stampUrl};
+['v2stampProject','v2stampTitle','v2stampLat','v2stampLon','v2stampNote'].forEach(function(id){$(id).addEventListener('input',function(){if(stampImage)drawStamp()})});
+function drawStamp(){var c=$('v2stampCanvas'),ctx=c.getContext('2d');var max=2200,scale=Math.min(1,max/stampImage.width,max/stampImage.height);c.width=Math.round(stampImage.width*scale);c.height=Math.round(stampImage.height*scale);ctx.drawImage(stampImage,0,0,c.width,c.height);var h=Math.max(116,c.height*.17),y=c.height-h;ctx.fillStyle='rgba(7,25,34,.82)';ctx.fillRect(0,y,c.width,h);ctx.fillStyle='#d1b47d';ctx.fillRect(0,y,Math.max(5,c.width*.008),h);var pad=Math.max(18,c.width*.025),line=Math.max(18,c.width*.027);ctx.textAlign='left';ctx.direction='ltr';ctx.fillStyle='#ffffff';ctx.font='bold '+line+'px Arial';var title=$('v2stampTitle').value||'GEOSNAP PRO · FIELD RECORD';ctx.fillText(title,pad,y+line*1.55);ctx.fillStyle='#d9e8e5';ctx.font=Math.max(13,line*.68)+'px Arial';var project=$('v2stampProject').value;var coords=$('v2stampLat').value&&$('v2stampLon').value?('GPS  '+$('v2stampLat').value+', '+$('v2stampLon').value):'GPS coordinates not provided';ctx.fillText((project?'PROJECT  '+project+'   ·   ':'')+coords,pad,y+line*2.75);var note=$('v2stampNote').value;var date=new Date().toLocaleString();ctx.fillText((note?note+'   ·   ':'')+date,pad,y+line*3.8);ctx.fillStyle='#d1b47d';ctx.font='bold '+Math.max(12,line*.62)+'px Arial';ctx.textAlign='right';ctx.fillText('GEOSNAP PRO',c.width-pad,c.height-line*.55);$('v2stampDownload').disabled=false}
+$('v2stampGps').onclick=function(){if(!navigator.geolocation)return alert('GPS در دسترس نیست.');navigator.geolocation.getCurrentPosition(function(p){$('v2stampLat').value=p.coords.latitude.toFixed(7);$('v2stampLon').value=p.coords.longitude.toFixed(7);if(stampImage)drawStamp()},function(e){alert('دریافت GPS انجام نشد: '+e.message)},{enableHighAccuracy:true,timeout:20000,maximumAge:0})};
+$('v2stampDownload').onclick=function(){if(!stampImage)return;var c=$('v2stampCanvas');c.toBlob(function(blob){if(!blob)return alert('ساخت تصویر ناموفق بود.');var u=URL.createObjectURL(blob),a=document.createElement('a');a.href=u;a.download='GeoSnap-Pro-Stamped-'+new Date().toISOString().slice(0,10)+'.jpg';a.click();setTimeout(function(){URL.revokeObjectURL(u)},1500)},'image/jpeg',.94)};
+function renderInspectionHistory(){var d=load(),items=d.logs.filter(function(x){return x.type==='فرم بازرسی'}).slice().reverse().slice(0,8);$('v2inspectHistory').innerHTML='<h3 style="margin-top:18px">بازرسی‌های اخیر</h3>'+(items.length?items.map(item).join(''):'<p class="v2hint">هنوز گزارشی ثبت نشده است.</p>')}
+$('v2inspectSave').onclick=function(){var title=$('v2inspectTitle').value.trim();if(!title)return alert('عنوان بازدید را وارد کنید.');var selected=Array.from($('v2inspectChecks').querySelectorAll('input:checked')).map(function(x){return checks[Number(x.value)]});log({type:'فرم بازرسی',title:title,name:title,project:$('v2inspectProject').value,notes:$('v2inspectNotes').value,details:'موارد کنترل‌شده: '+selected.length+' از '+checks.length+'\n'+selected.join('، '),status:selected.length===checks.length?'همه موارد کنترل شد':'بازرسی ناقص / نیازمند پیگیری'});$('v2inspectTitle').value='';$('v2inspectProject').value='';$('v2inspectNotes').value='';$('v2inspectChecks').querySelectorAll('input').forEach(function(x){x.checked=false});renderInspectionHistory()};
+
 })();
