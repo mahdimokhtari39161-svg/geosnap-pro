@@ -39,7 +39,7 @@ jobs:
         run: npx cap add android
 
       - name: Generate Android app icons
-        run: npx @capacitor/assets generate --android --assetPath assets --iconBackgroundColor '#102b35' --splashBackgroundColor '#102b35'
+        run: npx @capacitor/assets generate --android --assetPath assets --iconBackgroundColor '#fff8ef' --splashBackgroundColor '#fff8ef'
 
       - name: Add camera and location permissions
         shell: bash
