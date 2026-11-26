@@ -4,7 +4,7 @@
   "private": true,
   "description": "GeoSnap Pro GPS photo documentation Android app",
   "scripts": {
-    "build:web": "mkdir -p www && cp index.html manifest.webmanifest icon-192.png icon-512.png sw.js www/"
+    "build:web": "mkdir -p www && cp index.html geosnap-v2.js manifest.webmanifest icon-192.png icon-512.png sw.js www/"
   },
   "dependencies": {
     "@capacitor/android": "8.6.0",
