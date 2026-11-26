@@ -1,10 +1,11 @@
 
-const CACHE_NAME = "geosnap-pro-v7";
+const CACHE_NAME = "geosnap-pro-v8";
 
 const APP_FILES = [
   "./",
   "./index.html",
   "./geosnap-v2.js",
+  "./geosnap-v2-fieldkit.js",
   "./manifest.webmanifest",
   "./icon-192.png",
   "./icon-512.png"
