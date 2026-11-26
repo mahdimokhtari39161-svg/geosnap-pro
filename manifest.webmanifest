@@ -1,4 +1,3 @@
-
 {
   "id": "./",
   "name": "GeoSnap Pro",
@@ -8,8 +7,8 @@
   "scope": "./",
   "display": "standalone",
   "orientation": "portrait",
-  "background_color": "#f2f5f6",
-  "theme_color": "#102b35",
+  "background_color": "#fff8ef",
+  "theme_color": "#e9785b",
   "lang": "fa",
   "dir": "rtl",
   "icons": [
